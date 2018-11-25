@@ -1,0 +1,61 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    command: "--smallfiles --logpath=/dev/null"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    volumes:
+      - ./data/db:/data/db
+
+  cgi:
+    build: ./app
+    volumes:
+      - ./data/app:/data
+    links:
+      - mongo
+    environment:
+      MONGO_USERNAME: ${MONGO_USERNAME}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      PORT: 3000
+      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+      OAUTH0_CLIENT_ID: ${OAUTH0_CLIENT_ID}
+      OAUTH0_CLIENT_SECRET: ${OAUTH0_CLIENT_SECRET}
+      APP_ROOT: ${APP_ROOT}
+      NODE_ENV: ${NODE_ENV}
+      APP_SECRET: ${APP_SECRET}
+      ELASTICSEARCH_URI: ${ELASTICSEARCH_URI}
+      MONGO_HOSTNAME: team10.d.calebj.io
+
+  caddy:
+    image: abiosoft/caddy:no-stats
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./data/caddy:/root/.caddy
+      - ./data/Caddyfile:/etc/Caddyfile
+    links:
+      - cgi
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - discovery.type=single-node

@@ -1,0 +1,45 @@
+{
+  "name": "CSCE-315-Project-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dboperations.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "next build present",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.tamu.edu/stephanie-keck/CSCE-315-Project-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@material-ui/core": "^1.5.1",
+    "@material-ui/icons": "^2.0.3",
+    "async": "^2.6.1",
+    "axios": "^0.18.0",
+    "connect-ensure-login": "^0.1.1",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.0.3",
+    "elasticsearch": "^15.1.1",
+    "es6-promise": "^4.2.5",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "isomorphic-fetch": "^2.2.1",
+    "jss": "^9.8.7",
+    "mongodb": "^3.1.6",
+    "next": "^7.0.0",
+    "next-routes": "^1.4.2",
+    "node-fetch": "^2.2.0",
+    "passport": "^0.4.0",
+    "passport-auth0": "^1.0.0",
+    "passport-google-oauth": "^1.0.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-autosuggest": "^9.4.2",
+    "react-dom": "^16.5.2",
+    "react-jss": "^8.6.1"
+  }
+}

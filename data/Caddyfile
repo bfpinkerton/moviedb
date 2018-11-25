@@ -1,0 +1,9 @@
+team10.d.calebj.io {
+    gzip
+    proxy / cgi:3000 {
+        transparent
+    }
+    cors / http://localhost:3000 {
+        allow_credentials true
+    }
+}
